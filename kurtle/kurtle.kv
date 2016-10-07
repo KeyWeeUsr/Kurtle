@@ -1,0 +1,93 @@
+<FriendlyPanel@BoxLayout>:
+    Spinner:
+        id: dtype
+        text: 'Type:'
+        values: ['point', 'line', ]
+
+    Spinner:
+        id: dir
+        text: 'Direction:'
+        values: ['left', 'right', 'forward', 'back']
+
+    TextInput:
+        id: angle
+        hint_text: 'Angle:'
+        multiline: False
+        on_text_validate: length.focus = True
+
+    TextInput:
+        id: length
+        hint_text: 'Length:'
+        multiline: False
+        on_text_validate: color.focus = True
+
+    TextInput:
+        id: color
+        hint_text: 'Color(hex):'
+        multiline: False
+        on_text_validate: draw.dispatch('on_release')
+
+    Button:
+        id: draw
+        text: 'Draw!'
+        on_release:
+            app.root.run(dtype.text, dir.text, angle.text,
+            length.text, color.text)
+
+    Button:
+        text: 'Clear!'
+        on_release:
+            app.root.clear()
+
+<Body>:
+    orientation: 'vertical'
+    BoxLayout:
+        size_hint_y: 0.1
+        Spinner:
+            size_hint_x: 0.2
+            values: ['friendly', 'console']
+            text: 'friendly'
+            on_text: manager.current = self.text
+
+        ScreenManager:
+            id: manager
+            Screen:
+                name: 'friendly'
+                BoxLayout:
+                    FriendlyPanel:
+
+            Screen:
+                name: 'console'
+                BoxLayout:
+                    TextInput:
+                        id: console
+                        multiline: False
+                        hint_text:
+                            '(type, direction, angle, length, color)'
+                        on_text_validate: root.crun(self.text)
+                        size_hint_x: 0.8
+
+                    Button:
+                        size_hint_x: 0.1
+                        text: 'Help'
+                        on_release: app.root.help()
+
+                    Button:
+                        size_hint_x: 0.1
+                        text: 'Clear!'
+                        on_release:
+                            app.root.clear()
+
+    ScrollView:
+        size_hint_y: 0.9
+        scroll_x: 0.5
+        scroll_y: 0.5
+        ScatterLayout:
+            size_hint: None, None
+            size: root.plane_size
+            id: plane
+            Image:
+                size_hint: None, None
+                size: 16, 16
+                pos: [s / 2.0 - 8 for s in root.plane_size]
+                source: app.icon
