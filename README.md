@@ -16,3 +16,8 @@ Licenses
 
 - Kurtle is released under MIT License. Please read the
   [LICENSE](https://github.com/KeyWeeUsr/Kurtle/blob/master/LICENSE.txt) file.
+
+Screenshot
+----------
+
+<img align="middle" width="512" src="https://raw.githubusercontent.com/KeyWeeUsr/Kurtle/master/kurtle/screen.png"/>
